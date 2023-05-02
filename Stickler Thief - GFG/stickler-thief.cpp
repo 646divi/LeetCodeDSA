@@ -35,15 +35,28 @@ class Solution
         /*vector<int>dp(n,-1);
         return solve(n-1,arr,dp);*/
         
-        if(n==0)return arr[0];
-        vector<int>dp(n,0);
-        dp[0]=arr[0];
+        
+        //Tabulation TC:O(N),Sc:O(N)
+        // if(n==0)return arr[0];
+        // vector<int>dp(n,0);
+        // dp[0]=arr[0];
+        // for(int i=1;i<n;i++){
+        //     int take=arr[i];if(i>1)take+=dp[i-2];
+        //     int notake=0+dp[i-1];
+        //     dp[i]=max(take,notake);
+        // }
+        // return dp[n-1];
+        
+        
+        //space optimization TC:O(N),SC:O(1)
+        int prev=arr[0];
+        int prev2=0;
         for(int i=1;i<n;i++){
-            int take=arr[i];if(i>1)take+=dp[i-2];
-            int notake=0+dp[i-1];
-            dp[i]=max(take,notake);
+            int curr=max((arr[i]+prev2),(0+prev));
+            prev2=prev;
+            prev=curr;
         }
-        return dp[n-1];
+        return prev;
     }
 };
 
