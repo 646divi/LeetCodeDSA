@@ -1,5 +1,6 @@
 class Solution {
 public:
+    //Memoization code
     int solve(vector<int>& p,int i,int buy,int n,int fee,vector<vector<int>>&dp){
         if(i==n)return 0;
         if(dp[i][buy]!=-1)return dp[i][buy];
@@ -12,9 +13,24 @@ public:
         return dp[i][buy]=profit;
         
     }
-    int maxProfit(vector<int>& prices, int fee) {
-        int n=prices.size();
-        vector<vector<int>>dp(n,vector<int>(2,-1));
-        return solve(prices,0,1,n,fee,dp);
+    int maxProfit(vector<int>& p, int fee) {
+        int n=p.size();
+        //--------------------------------------------//
+        //---------Memoization part-------------------//
+        //--------------------------------------------//
+        // vector<vector<int>>dp(n,vector<int>(2,-1));
+        // return solve(prices,0,1,n,fee,dp);
+        //--------------------------------------------//
+        //---------Memoization part-------------------//
+        //--------------------------------------------//
+        vector<vector<int>>dp(n+1,vector<int>(2,0));
+        for(int i=n-1;i>=0;i--){
+            int profit=0;
+            dp[i][1]=max((-p[i]+dp[i+1][0]),(dp[i+1][1]));
+            dp[i][0]=max((p[i]+dp[i+1][1])-fee,(dp[i+1][0]));
+        }
+        return dp[0][1];
+        
+        
     }
 };
