@@ -10,33 +10,33 @@ using namespace std;
 
 class Solution{
   public:
-  int solve(int price [],int i,int len){
-      if(i==0){
-          return len*price[0];
-      }
-      int not_take=solve(price,i-1,len);
-      int take=INT_MIN;
-      int rl=i+1;
-      if(rl<=len)take=price[i]+solve(price,i,len-rl);
-      return max(take,not_take);
-  }
+    int maxCost(int price[], int n,vector<vector<int>>&dp,int i){
+        if(i==0)return price[0]*n;
+        if(dp[i][n]!=-1)return dp[i][n];
+        int not_take=0+maxCost(price,n,dp,i-1);
+        int take=INT_MIN;
+        int rl=i+1;
+        if(rl<=n)take=price[i]+maxCost(price,n-rl,dp,i);
+        
+        return dp[i][n]=max(take,not_take);
+    }
     int cutRod(int price[], int n) {
         //code here
         vector<vector<int>>dp(n,vector<int>(n+1,0));
-        // return solve(price,n-1,n);
         for(int i=0;i<=n;i++){
             dp[0][i]=price[0]*i;
         }
-        // for(int i=1;i<n;i++)dp[0][i]=0;
         for(int i=1;i<n;i++){
-            for(int j=0;j<=n;j++){
-                int rl=i+1;
-                int not_take=0+dp[i-1][j];
+            for(int l=0;l<=n;l++){
+                int not_take=dp[i-1][l]+0;
                 int take=INT_MIN;
-                if(rl<=j)take=price[i]+dp[i][j-rl];
-                dp[i][j]=max(take,not_take);
+                if((i+1)<=l){
+                    take=price[i]+dp[i][l-(i+1)];
+                }
+                dp[i][l]=max(take,not_take);
             }
         }
+        // return maxCost(price,n,vec,n-1);
         return dp[n-1][n];
     }
 };
