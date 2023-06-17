@@ -59,18 +59,14 @@ int main() {
 int floor(Node* root, int x) {
     // Code here
     if(!root)return -1;
-    int mini=INT_MIN;
+    int flr=INT_MIN;
     while(root!=NULL){
-        if(root->data==x){
-            mini=root->data;
-            break;
-        }
-        if(x < root->data){
+        if(root->data > x){
             root=root->left;
-        }else{
-            mini=root->data;
+        }else if(root->data <= x){
+            flr=root->data;
             root=root->right;
         }
     }
-    return (mini==INT_MIN)?-1:mini;
+    return (flr==INT_MIN)?-1:flr;
 }
