@@ -26,16 +26,10 @@ class Solution{
             
             Node* left=NULL,*right=NULL;
             if(n1 > root->data and n2> root->data){
-                right=LCA(root->right,n1,n2);
+                return LCA(root->right,n1,n2);
             }else if(n1 < root->data and n2< root->data){
-                left=LCA(root->left,n1,n2);
-            }else{
-                left=LCA(root->left,n1,n2);
-                right=LCA(root->right,n1,n2);
+                return LCA(root->left,n1,n2);
             }
-            if(!left)return right;
-            if(!right)return left;
-            if(!left and !right)return NULL;
             return root;
         }
 
