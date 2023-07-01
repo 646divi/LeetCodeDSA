@@ -8,13 +8,13 @@ class Solution{
 public:
 	void pushZerosToEnd(int arr[], int n) {
 	    // code here
-	    int idx=0;
+	    int idx=-1;
 	    for(int i=0;i<n;i++){
 	        if(arr[i]!=0){
-	            swap(arr[i],arr[idx++]);
+	            idx++;
+	            swap(arr[i],arr[idx]);
 	        }
 	    }
-	    
 	}
 };
 
