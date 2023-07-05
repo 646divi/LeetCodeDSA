@@ -22,15 +22,30 @@ class Solution {
         int not_take=findWays(arr,sum,n-1,dp);
         return dp[n][sum] = take+not_take;
     }
-    int findTargetSumWays(vector<int>&A ,int target) {
+    int findTargetSumWays(vector<int>&arr ,int target) {
         //Your code here
+        int mod=(int)1e9+7;
         int tot_sum=0;
-        int n=A.size();
-        for(auto x:A)tot_sum+=x;
+        int n=arr.size();
+        for(auto x:arr)tot_sum+=x;
         if((tot_sum-target) < 0 || (tot_sum-target)%2==1)return 0;
         int sum=(tot_sum-target) / 2;
-        vector<vector<int>>dp(n,vector<int>(sum+1,-1));
-        return findWays(A,sum,n-1,dp);
+        // vector<vector<int>>dp(n,vector<int>(sum+1,-1));
+        // return findWays(A,sum,n-1,dp);
+        vector<vector<int>>dp(n,vector<int>(sum+1,0));
+        if(arr[0]==0)dp[0][0]=2;
+        else dp[0][0]=1;
+        if(arr[0]!=0 and arr[0]<=sum)dp[0][arr[0]]=1;
+        for(int i=1;i<n;i++){
+            for(int j=0;j<=sum;j++){
+                int take=0;
+                if(arr[i]<=j)take=dp[i-1][j-arr[i]];
+                int not_take=dp[i-1][j];
+                dp[i][j]=(take+not_take)%mod;
+            }
+        }
+        return dp[n-1][sum];
+        
         
     }
 };
